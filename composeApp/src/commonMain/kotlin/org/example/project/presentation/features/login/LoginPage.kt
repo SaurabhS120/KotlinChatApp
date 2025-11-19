@@ -23,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinchatapp.composeapp.generated.resources.Res
 import kotlinchatapp.composeapp.generated.resources.compose_multiplatform
 import org.example.project.Greeting
@@ -32,8 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 fun LoginPage(){
-    var userName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val viewModel = viewModel { LoginViewModel() }
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primaryContainer)
@@ -47,15 +48,15 @@ fun LoginPage(){
         Column {
             Text("Username")
             TextField(
-                value = userName,
-                onValueChange = { newText -> userName = newText },
+                value = viewModel.userName.value,
+                onValueChange = { newText -> viewModel.userName.value = newText },
                 label = { Text("Enter text") }
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text("Password")
             TextField(
-                value = password,
-                onValueChange = { newText -> password = newText },
+                value = viewModel.password.value,
+                onValueChange = { newText -> viewModel.password.value = newText },
                 label = { Text("Enter text") }
             )
         }
@@ -63,5 +64,11 @@ fun LoginPage(){
         Button(onClick = {}, modifier = Modifier.padding(12.dp)){
             Text("Login", modifier = Modifier.padding(horizontal = 12.dp))
         }
+        Text("username : ${viewModel.userName.value}")
+        Text("password : ${viewModel.password.value}")
     }
+}
+class LoginViewModel : ViewModel() {
+    var userName = mutableStateOf("")
+    var password = mutableStateOf("")
 }
