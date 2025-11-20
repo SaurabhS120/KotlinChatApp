@@ -1,5 +1,5 @@
 ### Navigation
-We have used `NavHost` composable to add navigation in out chat app.
+We have used [NavHost](https://developer.android.com/develop/ui/compose/navigation) composable to add navigation in out chat app.
 
 1. We have created [Screens Class](composeApp/src/commonMain/kotlin/org/example/project/presentation/navigation/Screens.kt) file which contains all navigation routes.
 ```
