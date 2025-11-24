@@ -56,6 +56,11 @@ fun RegisterPage(onBack: ()->Unit){
             scope.launch {
                 snackbarHostState.showSnackbar(event)
             }
+            scope.launch {
+                if(event == "Login Successful"){
+                    onBack()
+                }
+            }
         }
     }
     Scaffold ( snackbarHost = { SnackbarHost(snackbarHostState) }, topBar = {
