@@ -13,7 +13,7 @@ Verifies that the Login page is the initial screen when the app launches.
 **Assertions:**
 
 - ✅ "Login Page" title is displayed
-- ✅ "Username" input field is visible
+- ✅ "email" input field is visible
 - ✅ "Password" input field is visible
 - ✅ "Login" button is displayed
 
@@ -113,7 +113,7 @@ class NavigationTest {
     @Test
     fun initialRoute_shouldBeLoginPage() {
         composeTestRule.onNodeWithText("Login Page").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Username").assertIsDisplayed()
+        composeTestRule.onNodeWithText("email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
         composeTestRule.onNodeWithText("Login").assertIsDisplayed()
     }
