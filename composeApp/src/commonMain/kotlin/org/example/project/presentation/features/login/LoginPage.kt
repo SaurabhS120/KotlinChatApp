@@ -40,6 +40,8 @@ import kotlinx.coroutines.launch
 import org.example.project.Greeting
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.*
 
 @Preview
 @Composable
@@ -96,5 +98,12 @@ class LoginViewModel : ViewModel() {
     var password = mutableStateOf("")
     suspend fun login(){
         _events.emit("Login  - UserName : ${userName.value},Password : ${password.value}")
+        try {
+            val auth = Firebase.auth
+            auth.signInWithEmailAndPassword(userName.value, password.value)
+            _events.emit("Login Successful")
+        } catch (e: Exception) {
+            _events.emit("Login Failed: ${e.message}")
+        }
     }
 }
