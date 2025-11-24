@@ -47,18 +47,24 @@ fun RegisterPagePreview() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterPage(onBack: ()->Unit){
+fun RegisterPage(onBack: () -> Unit) {
     val viewModel = viewModel { RegisterViewModel() }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             scope.launch {
-                snackbarHostState.showSnackbar(event)
-            }
-            scope.launch {
-                if(event == "Login Successful"){
-                    onBack()
+                when(event){
+                    is RegisterFailure -> {
+                        snackbarHostState.showSnackbar(event.message)
+                    }
+                    is RegisterSuccess -> {
+                        snackbarHostState.showSnackbar("Register Success")
+                        onBack()
+                    }
+                    is RegisterInfo -> {
+                        snackbarHostState.showSnackbar(event.message)
+                    }
                 }
             }
         }
@@ -109,18 +115,22 @@ fun RegisterPage(onBack: ()->Unit){
     }
 }
 class RegisterViewModel : ViewModel() {
-    private val _events = MutableSharedFlow<String>()
+    private val _events = MutableSharedFlow<RegisterState>()
     val events = _events.asSharedFlow()
     var email = mutableStateOf("")
     var password = mutableStateOf("")
     suspend fun login(){
-        _events.emit("Login  - email : ${email.value},Password : ${password.value}")
+        _events.emit(RegisterInfo("Login  - email : ${email.value},Password : ${password.value}"))
         try {
             val auth = Firebase.auth
             auth.createUserWithEmailAndPassword(email.value, password.value)
-            _events.emit("Login Successful")
+            _events.emit(RegisterSuccess())
         } catch (e: Exception) {
-            _events.emit("Login Failed: ${e.message}")
+            _events.emit(RegisterFailure("Login Failed: ${e.message}"))
         }
     }
 }
+sealed class RegisterState{}
+class RegisterSuccess : RegisterState()
+class RegisterFailure(val message: String) : RegisterState()
+class RegisterInfo(val message: String) : RegisterState()
