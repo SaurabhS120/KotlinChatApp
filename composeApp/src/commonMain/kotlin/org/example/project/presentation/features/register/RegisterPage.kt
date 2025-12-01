@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,12 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.auth.*
 
 @Preview
 @Composable
@@ -74,7 +73,7 @@ fun RegisterPage(onBack: () -> Unit) {
             navigationIcon = {
                 IconButton(onClick = onBack) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
                     )
                 }
@@ -106,7 +105,7 @@ fun RegisterPage(onBack: () -> Unit) {
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = {scope.launch { viewModel.login() }}, modifier = Modifier.padding(12.dp)){
+            Button(onClick = {scope.launch { viewModel.register() }}, modifier = Modifier.padding(12.dp)){
                 Text("Register", modifier = Modifier.padding(horizontal = 12.dp))
             }
             Text("email : ${viewModel.email.value}")
@@ -119,14 +118,15 @@ class RegisterViewModel : ViewModel() {
     val events = _events.asSharedFlow()
     var email = mutableStateOf("")
     var password = mutableStateOf("")
-    suspend fun login(){
-        _events.emit(RegisterInfo("Login  - email : ${email.value},Password : ${password.value}"))
+    suspend fun register(){
+        _events.emit(RegisterInfo("Register - email: ${email.value}, password: ${password.value}"))
         try {
             val auth = Firebase.auth
+            // dev.gitlive Firebase Auth uses createUserWithEmailAndPassword(email, password)
             auth.createUserWithEmailAndPassword(email.value, password.value)
             _events.emit(RegisterSuccess())
         } catch (e: Exception) {
-            _events.emit(RegisterFailure("Login Failed: ${e.message}"))
+            _events.emit(RegisterFailure("Register Failed: ${e.message}"))
         }
     }
 }
