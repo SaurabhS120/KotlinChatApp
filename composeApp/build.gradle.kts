@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.googleServices)
 }
 
 kotlin {
@@ -14,7 +14,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -24,11 +24,15 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.firebase.analytics.ktx)
+            implementation(libs.firebase.auth.ktx)
+            implementation(libs.koin.android)
+            implementation(project(":firebase_authentication"))
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -40,6 +44,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.navigation.compose)
+            implementation(libs.dev.gitlive.firebase.auth)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(compose.materialIconsExtended)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -55,6 +63,8 @@ kotlin {
         }
     }
 }
+
+
 
 android {
     namespace = "org.example.project"
@@ -90,6 +100,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
     androidTestImplementation(compose.uiTest)
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.6")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.9.5")
 }
-

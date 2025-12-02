@@ -6,13 +6,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -25,32 +31,54 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.auth.*
 
 @Preview
 @Composable
-fun LoginPagePreview() {
-    LoginPage(createAccount = {})
+fun RegisterPagePreview() {
+    RegisterPage(onBack = {})
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginPage(createAccount: ()->Unit){
-    val viewModel = viewModel { LoginViewModel() }
+fun RegisterPage(onBack: () -> Unit) {
+    val viewModel = viewModel { RegisterViewModel() }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             scope.launch {
-                snackbarHostState.showSnackbar(event)
+                when(event){
+                    is RegisterFailure -> {
+                        snackbarHostState.showSnackbar(event.message)
+                    }
+                    is RegisterSuccess -> {
+                        snackbarHostState.showSnackbar("Register Success")
+                        onBack()
+                    }
+                    is RegisterInfo -> {
+                        snackbarHostState.showSnackbar(event.message)
+                    }
+                }
             }
         }
     }
-    Scaffold ( snackbarHost = { SnackbarHost(snackbarHostState) }){
+    Scaffold ( snackbarHost = { SnackbarHost(snackbarHostState) }, topBar = {
+        TopAppBar(title = { Text("Register") },
+            navigationIcon = {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            })
+    }){
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
@@ -59,7 +87,7 @@ fun LoginPage(createAccount: ()->Unit){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("Login Page",fontSize = 36.sp, fontWeight = FontWeight.Bold)
+            Text("Register Page",fontSize = 36.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(48.dp))
             Column {
                 Text("email")
@@ -77,30 +105,32 @@ fun LoginPage(createAccount: ()->Unit){
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = {scope.launch { viewModel.login() }}, modifier = Modifier.padding(12.dp)){
-                Text("Login", modifier = Modifier.padding(horizontal = 12.dp))
+            Button(onClick = {scope.launch { viewModel.register() }}, modifier = Modifier.padding(12.dp)){
+                Text("Register", modifier = Modifier.padding(horizontal = 12.dp))
             }
             Text("email : ${viewModel.email.value}")
             Text("password : ${viewModel.password.value}")
-            Button(onClick = createAccount, modifier = Modifier.padding(12.dp)){
-                Text("Create account", modifier = Modifier.padding(horizontal = 12.dp))
-            }
         }
     }
 }
-class LoginViewModel : ViewModel() {
-    private val _events = MutableSharedFlow<String>()
+class RegisterViewModel : ViewModel() {
+    private val _events = MutableSharedFlow<RegisterState>()
     val events = _events.asSharedFlow()
     var email = mutableStateOf("")
     var password = mutableStateOf("")
-    suspend fun login(){
-        _events.emit("Login  - email : ${email.value},Password : ${password.value}")
+    suspend fun register(){
+        _events.emit(RegisterInfo("Register - email: ${email.value}, password: ${password.value}"))
         try {
             val auth = Firebase.auth
-            auth.signInWithEmailAndPassword(email.value, password.value)
-            _events.emit("Login Successful")
+            // dev.gitlive Firebase Auth uses createUserWithEmailAndPassword(email, password)
+            auth.createUserWithEmailAndPassword(email.value, password.value)
+            _events.emit(RegisterSuccess())
         } catch (e: Exception) {
-            _events.emit("Login Failed: ${e.message}")
+            _events.emit(RegisterFailure("Register Failed: ${e.message}"))
         }
     }
 }
+sealed class RegisterState{}
+class RegisterSuccess : RegisterState()
+class RegisterFailure(val message: String) : RegisterState()
+class RegisterInfo(val message: String) : RegisterState()

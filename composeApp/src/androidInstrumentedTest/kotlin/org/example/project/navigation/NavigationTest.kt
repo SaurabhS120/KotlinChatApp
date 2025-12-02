@@ -17,7 +17,7 @@ class NavigationTest {
     @Test
     fun initialRoute_shouldBeLoginPage() {
         composeTestRule.onNodeWithText("Login Page").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Username").assertIsDisplayed()
+        composeTestRule.onNodeWithText("email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
         composeTestRule.onNodeWithText("Login").assertIsDisplayed()
     }
