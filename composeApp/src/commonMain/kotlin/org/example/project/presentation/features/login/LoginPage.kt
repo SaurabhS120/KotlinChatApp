@@ -24,13 +24,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import org.example.project.domain.usecase.FirebaseSignInWithEmailAndPasswordUseCase
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.auth.*
+import org.koin.compose.viewmodel.koinViewModel
 
 @Preview
 @Composable
@@ -40,7 +39,7 @@ fun LoginPagePreview() {
 
 @Composable
 fun LoginPage(createAccount: ()->Unit){
-    val viewModel = viewModel { LoginViewModel() }
+    val viewModel:LoginViewModel =  koinViewModel()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
@@ -88,7 +87,7 @@ fun LoginPage(createAccount: ()->Unit){
         }
     }
 }
-class LoginViewModel : ViewModel() {
+class LoginViewModel(val signInWithEmailAndPasswordUseCase: FirebaseSignInWithEmailAndPasswordUseCase) : ViewModel() {
     private val _events = MutableSharedFlow<String>()
     val events = _events.asSharedFlow()
     var email = mutableStateOf("")
@@ -96,8 +95,7 @@ class LoginViewModel : ViewModel() {
     suspend fun login(){
         _events.emit("Login  - email : ${email.value},Password : ${password.value}")
         try {
-            val auth = Firebase.auth
-            auth.signInWithEmailAndPassword(email.value, password.value)
+            signInWithEmailAndPasswordUseCase.execute(email.value, password.value)
             _events.emit("Login Successful")
         } catch (e: Exception) {
             _events.emit("Login Failed: ${e.message}")

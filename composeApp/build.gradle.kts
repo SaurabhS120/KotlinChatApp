@@ -29,8 +29,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.firebase.analytics.ktx)
-            implementation(libs.firebase.auth.ktx)
             implementation(libs.koin.android)
             implementation(project(":firebase_authentication"))
         }
@@ -44,10 +42,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.navigation.compose)
-            implementation(libs.dev.gitlive.firebase.auth)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(compose.materialIconsExtended)
+            implementation(project(":firebase_authentication"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
