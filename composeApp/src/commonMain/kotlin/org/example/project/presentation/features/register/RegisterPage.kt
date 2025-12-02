@@ -30,13 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import org.example.project.domain.usecase.FirebaseCreateWithEmailAndPasswordUseCase
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Preview
 @Composable
@@ -47,7 +46,7 @@ fun RegisterPagePreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterPage(onBack: () -> Unit) {
-    val viewModel = viewModel { RegisterViewModel() }
+    val viewModel:RegisterViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
@@ -113,7 +112,7 @@ fun RegisterPage(onBack: () -> Unit) {
         }
     }
 }
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(val firebaseCreateWithEmailAndPasswordUseCase: FirebaseCreateWithEmailAndPasswordUseCase) : ViewModel() {
     private val _events = MutableSharedFlow<RegisterState>()
     val events = _events.asSharedFlow()
     var email = mutableStateOf("")
@@ -121,9 +120,7 @@ class RegisterViewModel : ViewModel() {
     suspend fun register(){
         _events.emit(RegisterInfo("Register - email: ${email.value}, password: ${password.value}"))
         try {
-            val auth = Firebase.auth
-            // dev.gitlive Firebase Auth uses createUserWithEmailAndPassword(email, password)
-            auth.createUserWithEmailAndPassword(email.value, password.value)
+            firebaseCreateWithEmailAndPasswordUseCase.execute(email.value, password.value)
             _events.emit(RegisterSuccess())
         } catch (e: Exception) {
             _events.emit(RegisterFailure("Register Failed: ${e.message}"))
