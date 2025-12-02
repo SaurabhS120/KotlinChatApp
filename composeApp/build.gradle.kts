@@ -32,6 +32,7 @@ kotlin {
             implementation(libs.firebase.analytics.ktx)
             implementation(libs.firebase.auth.ktx)
             implementation(libs.koin.android)
+            implementation(project(":firebase_authentication"))
         }
         commonMain.dependencies {
             implementation(compose.runtime)

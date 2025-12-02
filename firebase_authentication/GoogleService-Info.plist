@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBz2owwFbU8aZdoZ5eh6DvUuGhrJ2SMqfo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>609944921384</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.example.project.KotlinChatApp</string>
+	<key>PROJECT_ID</key>
+	<string>kotlinchatapp-37ec1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kotlinchatapp-37ec1.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:609944921384:ios:a0b5af39b4952cbedc9c1d</string>
+</dict>
+</plist>
