@@ -48,7 +48,7 @@ jobs:
       # --------------------------------------------------
       - name: Create Google Services file
         run: |
-          echo "$ANDROID_GOOGLE_SERVICES" | base64 --decode > composeApp/GoogleService-Info.plist
+          echo "$ANDROID_GOOGLE_SERVICES" | base64 --decode > composeApp/google-services.json
 
       # --------------------------------------------------
       # Gradle Build (shared module + android app)
