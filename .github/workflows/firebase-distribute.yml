@@ -83,7 +83,7 @@ jobs:
       - name: Distribute to Firebase
         run: |
           firebase appdistribution:distribute \
-            composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
+            composeApp/build/outputs/apk/release/composeApp-release.apk \
             --app "$FIREBASE_APP_ID" \
             --groups "$TESTERS_GROUP" \
             --release-notes "$(cat release_notes.txt)"
