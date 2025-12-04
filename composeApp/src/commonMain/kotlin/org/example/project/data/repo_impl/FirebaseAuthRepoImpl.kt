@@ -1,7 +1,7 @@
-package org.example.project.data.repo_impl
+package org.example.kotlin_chat_app.data.repo_impl
 
 import com.example.firebase_authentication.FirebaseAuthDataSource
-import org.example.project.domain.repo.FirebaseAuthRepo
+import org.example.kotlin_chat_app.domain.repo.FirebaseAuthRepo
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 

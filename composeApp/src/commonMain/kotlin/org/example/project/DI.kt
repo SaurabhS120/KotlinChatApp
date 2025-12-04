@@ -1,11 +1,11 @@
-package org.example.project
+package org.example.kotlin_chat_app
 import LoginViewModel
 import RegisterViewModel
 import com.example.firebase_authentication.FirebaseAuthDataSource
-import org.example.project.data.repo_impl.FirebaseAuthRepoImpl
-import org.example.project.domain.repo.FirebaseAuthRepo
-import org.example.project.domain.usecase.FirebaseCreateWithEmailAndPasswordUseCase
-import org.example.project.domain.usecase.FirebaseSignInWithEmailAndPasswordUseCase
+import org.example.kotlin_chat_app.data.repo_impl.FirebaseAuthRepoImpl
+import org.example.kotlin_chat_app.domain.repo.FirebaseAuthRepo
+import org.example.kotlin_chat_app.domain.usecase.FirebaseCreateWithEmailAndPasswordUseCase
+import org.example.kotlin_chat_app.domain.usecase.FirebaseSignInWithEmailAndPasswordUseCase
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module

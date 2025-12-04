@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.kotlin_chat_app
 
 import android.os.Build
 

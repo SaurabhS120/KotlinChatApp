@@ -146,7 +146,7 @@ kotlin {
 #### MainActivity.kt (Android Entry Point)
 
 ```kotlin
-package org.example.project
+package org.example.kotlin_chat_app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -221,7 +221,7 @@ fun NavGraph(navController: NavHostController){
 #### App.kt (Root Composable)
 
 ```kotlin
-package org.example.project
+package org.example.kotlin_chat_app
 
 import NavGraph
 import androidx.compose.material3.MaterialTheme
@@ -567,7 +567,7 @@ if (currentUser != null) {
 
 1. **Firebase Project**: Create a project
    at [Firebase Console](https://console.firebase.google.com/)
-2. **Android App Registration**: Register your Android app with package name `org.example.project`
+2. **Android App Registration**: Register your Android app with package name `org.example.kotlin_chat_app`
 
 ### Step-by-Step Setup
 

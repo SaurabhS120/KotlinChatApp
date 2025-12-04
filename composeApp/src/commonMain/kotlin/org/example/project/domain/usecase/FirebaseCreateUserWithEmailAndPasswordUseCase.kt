@@ -1,6 +1,6 @@
-package org.example.project.domain.usecase
+package org.example.kotlin_chat_app.domain.usecase
 
-import org.example.project.domain.repo.FirebaseAuthRepo
+import org.example.kotlin_chat_app.domain.repo.FirebaseAuthRepo
 
 class FirebaseCreateWithEmailAndPasswordUseCase (val repo: FirebaseAuthRepo){
 

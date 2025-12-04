@@ -95,13 +95,13 @@ android {
 Created `NavigationTest.kt` with:
 
 ```kotlin
-package org.example.project.navigation
+package org.example.kotlin_chat_app.navigation
 
 import Screens
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import org.example.project.MainActivity
+import org.example.kotlin_chat_app.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.Test as KotlinTest
@@ -157,13 +157,13 @@ adb devices
 ### Option 2: Run Only NavigationTest Class
 
 ```bash
-./gradlew :composeApp:connectedAndroidTest --tests "org.example.project.navigation.NavigationTest"
+./gradlew :composeApp:connectedAndroidTest --tests "org.example.kotlin_chat_app.navigation.NavigationTest"
 ```
 
 ### Option 3: Run a Specific Test Method
 
 ```bash
-./gradlew :composeApp:connectedAndroidTest --tests "org.example.project.navigation.NavigationTest.initialRoute_shouldBeLoginPage"
+./gradlew :composeApp:connectedAndroidTest --tests "org.example.kotlin_chat_app.navigation.NavigationTest.initialRoute_shouldBeLoginPage"
 ```
 
 ### Option 4: Run from Android Studio / IntelliJ IDEA
@@ -231,7 +231,7 @@ adb devices
 
 ```
 java.lang.RuntimeException: Unable to resolve activity for: Intent { ... 
-cmp=org.example.project.test/androidx.activity.ComponentActivity }
+cmp=org.example.kotlin_chat_app.test/androidx.activity.ComponentActivity }
 ```
 
 **Cause:** Using `runComposeUiTest` instead of `createAndroidComposeRule`.

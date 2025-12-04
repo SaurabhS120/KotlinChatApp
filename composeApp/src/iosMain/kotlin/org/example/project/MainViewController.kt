@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.kotlin_chat_app
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.window.ComposeUIViewController
