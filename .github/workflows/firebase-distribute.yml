@@ -57,7 +57,7 @@ jobs:
       - name: Build CMP Android release APK
         run: |
           chmod +x ./gradlew
-          ./gradlew :androidApp:assembleRelease
+          ./gradlew :composeApp:assembleRelease
 
       # --------------------------------------------------
       # Install Firebase CLI
