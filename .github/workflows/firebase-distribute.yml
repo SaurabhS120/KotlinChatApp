@@ -12,6 +12,8 @@ jobs:
 
     env:
       ANDROID_GOOGLE_SERVICES: ${{ secrets.ANDROID_GOOGLE_SERVICES }}
+      $ANDROID_KEY_PROPERTIES: ${{ secrets.$ANDROID_KEY_PROPERTIES }}
+      $ANDROID_KEYSTORE: ${{ secrets.$ANDROID_KEYSTORE }}
       FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
       TESTERS_GROUP: ${{ vars.TESTERS_GROUP }}
 
@@ -53,13 +55,13 @@ jobs:
 
       - name: Create Key properties
         run: |
-          echo "ANDROID_KEY_PROPERTIES" | base64 --decode > composeApp/key.properties
+          echo "$ANDROID_KEY_PROPERTIES" | base64 --decode > composeApp/key.properties
 
 
       - name: Create Keystore file
         run: |
           mkdir -p composeApp/keystore/
-          echo "ANDROID_KEYSTORE" | base64 --decode > composeApp/keystore/my-release-key.jks
+          echo "$ANDROID_KEYSTORE" | base64 --decode > composeApp/keystore/my-release-key.jks
 
       # --------------------------------------------------
       # Gradle Build (shared module + android app)
