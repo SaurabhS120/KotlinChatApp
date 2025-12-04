@@ -48,7 +48,6 @@ jobs:
       # --------------------------------------------------
       - name: Create Google Services file
         run: |
-          mkdir -p androidApp/src/main
           echo "$ANDROID_GOOGLE_SERVICES" | base64 --decode > composeApp/src/release/google-services.json
 
       # --------------------------------------------------
