@@ -1,10 +1,10 @@
-package org.example.project.navigation
+package org.example.kotlin_chat_app.navigation
 
 import Screens
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import org.example.project.MainActivity
+import org.example.kotlin_chat_app.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.Test as KotlinTest

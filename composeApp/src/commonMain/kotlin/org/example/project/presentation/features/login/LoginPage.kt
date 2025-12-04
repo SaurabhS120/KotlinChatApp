@@ -27,7 +27,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import org.example.project.domain.usecase.FirebaseSignInWithEmailAndPasswordUseCase
+import org.example.kotlin_chat_app.domain.usecase.FirebaseSignInWithEmailAndPasswordUseCase
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
