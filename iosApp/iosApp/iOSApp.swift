@@ -1,5 +1,4 @@
 import SwiftUI
-
 @main
 struct iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
