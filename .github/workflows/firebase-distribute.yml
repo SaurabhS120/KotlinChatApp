@@ -71,7 +71,7 @@ jobs:
       - name: Distribute to Firebase
         run: |
           firebase appdistribution:distribute \
-            androidApp/build/outputs/apk/release/androidApp-release.apk \
+            composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
             --app "$FIREBASE_APP_ID" \
             --groups "$TESTERS_GROUP" \
             --release-notes "$(cat release_notes.txt)"
