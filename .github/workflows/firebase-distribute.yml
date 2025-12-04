@@ -50,6 +50,17 @@ jobs:
         run: |
           echo "$ANDROID_GOOGLE_SERVICES" | base64 --decode > composeApp/google-services.json
 
+
+      - name: Create Key properties
+        run: |
+          echo "ANDROID_KEY_PROPERTIES" | base64 --decode > composeApp/key.properties
+
+
+      - name: Create Keystore file
+        run: |
+          mkdir -p composeApp/keystore/
+          echo "ANDROID_KEYSTORE" | base64 --decode > composeApp/keystore/my-release-key.jks
+
       # --------------------------------------------------
       # Gradle Build (shared module + android app)
       # --------------------------------------------------

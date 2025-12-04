@@ -20,3 +20,5 @@ node_modules/
 /composeApp/google-services.json
 /composeApp/GoogleService-Info.plist
 /iosApp/iosApp/GoogleService-Info.plist
+/composeApp/keystore/my-release-key.jks
+/composeApp/key.properties
